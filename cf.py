@@ -18,7 +18,7 @@ def decode_cf61(data: bytes):
 
     idx += chunk_len
     chunk_len = 4
-    res.append(f"{data[idx:idx + chunk_len].hex()} {datetime.fromtimestamp(int.from_bytes(data[idx:idx + chunk_len], 'big')).strftime('%Y/%m/%d %H:%M:%S')}")
+    res.append(f"{data[idx:idx + chunk_len].hex()} {datetime.fromtimestamp(int.from_bytes(data[idx:idx + chunk_len], 'big')).astimezone().strftime('%Y/%m/%d %H:%M:%S %z')}")
 
     idx += chunk_len
     chunk_len = 2
