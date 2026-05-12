@@ -3,7 +3,7 @@
 import argparse
 from datetime import datetime
 
-def decode_cf61(data: bytes):
+def decode_cf61(data: bytes) -> list[str]:
     idx = 0
     chunk_len = 17
     res = [data[idx:idx + chunk_len].hex()]
@@ -38,12 +38,12 @@ def decode_cf61(data: bytes):
 
     return res
 
-def decode_cf62(data: bytes):
+def decode_cf62(data: bytes) -> list[str]:
     res = decode_cf61(data[:-25] + data[-5:])[:-1]
     res += decode_cf61(data[:20] + data[40:])[3:]
     return res
 
-def decode_cf63(data: bytes):
+def decode_cf63(data: bytes) -> list[str]:
     idx = 0
     chunk_len = 17
     res = [data[idx:idx + chunk_len].hex()]
@@ -77,7 +77,7 @@ def decode_cf63(data: bytes):
 
     return res
 
-def decode_cf64(data: bytes):
+def decode_cf64(data: bytes) -> list[str]:
     res = decode_cf63(data[:40] + data[60:-101] + data[-5:])[:-1]
     second_part = decode_cf63(data[:20] + data[40:61] + data[-101:])
     res.insert(4, second_part[3])
@@ -87,7 +87,7 @@ def decode_cf64(data: bytes):
 def bytesfromhex(s: str) -> bytes:
     return bytes.fromhex(s)
 
-def main():
+def main() -> None:
     CF_FUNCTION_TABLE = {
         61: decode_cf61,
         62: decode_cf62,
